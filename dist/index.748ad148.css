@@ -1,0 +1,120 @@
+body {
+  color: #444e54;
+  background-color: #eae6e2;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+main {
+  margin-top: 30px;
+}
+
+hr {
+  border: 1px solid #686d80;
+  max-width: 800px;
+  margin: 48px;
+}
+
+.search-form {
+  border: 2px solid #332b1d;
+  border-radius: 5px;
+  width: 300px;
+  margin: 20px 25px;
+  padding: 5px 10px;
+  font-family: Oxygen Mono, monospace;
+  font-size: 12px;
+}
+
+button {
+  background-color: #d0cd8f;
+  border: 2px solid #332b1d;
+  border-radius: 5px;
+  padding: 5px 10px;
+  font-family: Oxygen Mono, monospace;
+  font-size: 12px;
+  display: inline-block;
+}
+
+button:hover {
+  background-color: #b9b559;
+}
+
+.measurements {
+  position: relative;
+  top: -10px;
+  left: 25px;
+}
+
+.current-weather {
+  margin-top: 50px;
+}
+
+.city-title {
+  max-width: 300px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.temp-title {
+  text-align: center;
+  font-family: Inter, sans-serif;
+  font-size: 140px;
+}
+
+.todays-info {
+  margin: 15px 0;
+}
+
+.side-info {
+  position: relative;
+  left: 72px;
+}
+
+p, ul {
+  font-family: Oxygen Mono, monospace;
+  font-size: 15px;
+}
+
+li {
+  list-style: none;
+}
+
+.week-forecast {
+  text-align: center;
+  font-family: Inter, sans-serif;
+}
+
+.weather {
+  margin-top: 2px;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+h2 {
+  font-size: 48px;
+}
+
+h3 {
+  margin-bottom: -18px;
+  font-size: 22px;
+}
+
+span {
+  font-size: 20px;
+}
+
+footer {
+  text-align: center;
+  position: relative;
+  bottom: -100px;
+}
+
+a {
+  color: #0a95c9;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #007bff;
+}
+/*# sourceMappingURL=index.748ad148.css.map */
