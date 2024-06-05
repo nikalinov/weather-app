@@ -53,6 +53,19 @@ function searchCity(city) {
   const apiKey = "2b5fc755ac2ec59250868b5527df31c4";
   const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then(displayWeatherInfo);
+  setPicture(city);
+}
+
+async function setPicture(city) {
+  const promise = await fetch(
+    `https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1&w=500&h=500`
+  );
+  const result = await promise.json();
+  const picture = result.results[0].urls.raw;
+  console.log(picture);
+  document.getElementsByTagName(
+    "body"
+  )[0].style = `background-image:url("${picture}");background-size:cover;`;
 }
 
 function handleSubmit(event) {
