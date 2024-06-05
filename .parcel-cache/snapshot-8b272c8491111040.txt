@@ -1,4 +1,4 @@
-1642
+1641
 62/home/nikalinov/javascript-learning/weather-app/css/styles.css1717607208494238983 0
 51/home/nikalinov/javascript-learning/weather-app/css1717501728612995836 1
 80/home/nikalinov/javascript-learning/weather-app/node_modules/color-name/index.js1717501635103997437 0
@@ -773,11 +773,10 @@
 86/home/nikalinov/javascript-learning/weather-app/node_modules/json-schema-traverse/spec1717501635135997787 1
 84/home/nikalinov/javascript-learning/weather-app/node_modules/ajv/lib/dot/comment.jst1717501635167998137 0
 84/home/nikalinov/javascript-learning/weather-app/node_modules/balanced-match/index.js1717501635071997087 0
-58/home/nikalinov/javascript-learning/weather-app/.gitignore1717506821544040870 0
+58/home/nikalinov/javascript-learning/weather-app/.gitignore1717609639255481408 0
 78/home/nikalinov/javascript-learning/weather-app/node_modules/mime-db/README.md1717506340712465348 0
 77/home/nikalinov/javascript-learning/weather-app/node_modules/eslint-scope/lib1717501635147997918 1
 106/home/nikalinov/javascript-learning/weather-app/node_modules/json-stable-stringify-without-jsonify/LICENSE1717501635111997524 0
-57/home/nikalinov/javascript-learning/weather-app/test.html1717604926096248030 0
 99/home/nikalinov/javascript-learning/weather-app/node_modules/@nodelib/fs.scandir/out/utils/index.js1717501635139997831 0
 114/home/nikalinov/javascript-learning/weather-app/node_modules/eslint/lib/linter/code-path-analysis/debug-helpers.js1717501635163998093 0
 87/home/nikalinov/javascript-learning/weather-app/node_modules/@eslint/eslintrc/README.md1717501635163998093 0
@@ -786,7 +785,7 @@
 80/home/nikalinov/javascript-learning/weather-app/node_modules/json-buffer/LICENSE1717501635111997524 0
 90/home/nikalinov/javascript-learning/weather-app/node_modules/@eslint/eslintrc/package.json1717501635159998049 0
 74/home/nikalinov/javascript-learning/weather-app/dist/index.c36f364e.js.map1717607954274811793 0
-56/home/nikalinov/javascript-learning/weather-app/index.js1717609540278288140 0
+56/home/nikalinov/javascript-learning/weather-app/index.js1717612569067759898 0
 79/home/nikalinov/javascript-learning/weather-app/node_modules/@eslint/js/LICENSE1717501635103997437 0
 99/home/nikalinov/javascript-learning/weather-app/node_modules/fast-json-stable-stringify/test/str.js1717501635135997787 0
 94/home/nikalinov/javascript-learning/weather-app/node_modules/asynckit/lib/readable_parallel.js1717506340712465348 0

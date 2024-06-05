@@ -49,7 +49,7 @@ async function setPicture(city) {
     const result = await promise.json();
     const picture = result.results[0].urls.raw;
     console.log(picture);
-    document.getElementsByTagName("body")[0].style = `background-image:url("${picture}");background-size:cover;`;
+    document.getElementsByTagName("head")[0].innerHTML += `<style>body::before {content: '';position: absolute;top: 0;left: 0;width: 100%;height: 100%;background-image: url('${picture}');opacity: 0.3;background-size:cover;}</style>`;
 }
 function handleSubmit(event) {
     event.preventDefault();
