@@ -5,6 +5,15 @@ body {
   margin: 0 auto;
 }
 
+.hero:before {
+  content: "";
+  opacity: .75;
+  background-image: url("https://placekitten.com/1200/800");
+  background-size: cover;
+  position: absolute;
+  inset: 0;
+}
+
 main {
   margin-top: 30px;
 }

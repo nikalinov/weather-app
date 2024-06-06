@@ -1,8 +1,20 @@
 body {
   max-width: 900px;
   margin: 0 auto;
-  background-color: #eae6e2;
+  background-color: rgb(234, 230, 226);
   color: #444e54;
+}
+
+.hero::before {
+  content: "";
+  background-image: url("https://placekitten.com/1200/800");
+  background-size: cover;
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  opacity: 0.75;
 }
 
 main {

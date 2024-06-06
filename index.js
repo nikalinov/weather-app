@@ -1,3 +1,13 @@
+const dayNames = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 // formatting time and day
 function formatTime(date) {
   let hours = date.getHours();
@@ -38,20 +48,54 @@ currentDay.innerHTML = formatDay(newCurrentDay);
 
 // implementing search bar and api request
 function displayWeatherInfo(response) {
-  document.querySelector("#searched-city").innerHTML = response.data.name;
-  const temperature = Math.round(response.data.main.temp);
-  document.querySelector("#current-temperature").innerHTML = `${temperature}°`;
-  const humidity = response.data.main.humidity;
-  document.querySelector("#humidity").innerHTML = `${humidity}%`;
-  const windSpeed = Math.round(response.data.wind.speed);
-  document.querySelector("#wind").innerHTML = `${windSpeed}km/h`;
+  const fiveDaysDictionary = createFiveDaysDictionary(response);
+  document.querySelector("#searched-city").innerHTML =
+    fiveDaysDictionary[0]["city"];
+  document.querySelector(
+    "#current-temperature"
+  ).innerHTML = `${fiveDaysDictionary[0]["temp"]}°`;
+  document.querySelector(
+    "#humidity"
+  ).innerHTML = `${fiveDaysDictionary[0]["humidity"]}%`;
+  document.querySelector(
+    "#wind"
+  ).innerHTML = `${fiveDaysDictionary[0]["windSpeed"]}km/h`;
   document.querySelector("#weather-type").innerHTML =
-    response.data.weather[0].main;
+    fiveDaysDictionary[0]["weatherType"];
+  document.querySelector("#current-day").innerHTML =
+    fiveDaysDictionary[0]["day"];
+  console.log(fiveDaysDictionary);
+  const nextDays =
+    document.getElementsByClassName("row week-forecast")[0].childNodes;
+  for (let i = 0; i < 4; i++) {
+    const currDay = nextDays[1 + 2 * i];
+    currDay.getElementsByTagName("h3")[0].innerHTML =
+      fiveDaysDictionary[i + 1]["day"];
+  }
+}
+
+function createFiveDaysDictionary(response) {
+  const dailyWeather = [{}, {}, {}, {}, {}];
+  for (let i = 0; i < 5; i++) {
+    const jsonIndex = 3 + 8 * i;
+    dailyWeather[i].city = response.data.city.name;
+    dailyWeather[i].temp = Math.round(response.data.list[jsonIndex].main.temp);
+    dailyWeather[i].humidity = response.data.list[jsonIndex].main.humidity;
+    dailyWeather[i].windSpeed = Math.round(
+      response.data.list[jsonIndex].wind.speed
+    );
+    dailyWeather[i].weatherType = response.data.list[jsonIndex].weather[0].main;
+    dailyWeather[i].day =
+      dayNames[
+        new Date(response.data.list[jsonIndex].dt_txt.split(" ")[0]).getDay()
+      ];
+  }
+  return dailyWeather;
 }
 
 function searchCity(city) {
-  const apiKey = "2b5fc755ac2ec59250868b5527df31c4";
-  const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric`;
+  const apiKey = "2b5fc755ac2ec59250868b5527df31c4"; // TODO hide API Key
+  const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then(displayWeatherInfo);
   setPicture(city);
 }
@@ -59,7 +103,7 @@ function searchCity(city) {
 async function setPicture(city) {
   const promise = await fetch(
     `https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1&w=500&h=500`
-  );
+  ); // TODO hide API Key
   const result = await promise.json();
   const picture = result.results[0].urls.raw;
   console.log(picture);
