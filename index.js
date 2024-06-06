@@ -67,10 +67,15 @@ function displayWeatherInfo(response) {
   console.log(fiveDaysDictionary);
   const nextDays =
     document.getElementsByClassName("row week-forecast")[0].childNodes;
+
   for (let i = 0; i < 4; i++) {
     const currDay = nextDays[1 + 2 * i];
     currDay.getElementsByTagName("h3")[0].innerHTML =
       fiveDaysDictionary[i + 1]["day"];
+    currDay.getElementsByClassName("weather")[0].innerHTML =
+      fiveDaysDictionary[i + 1]["weatherType"];
+    currDay.getElementsByTagName("span")[0].innerHTML =
+      fiveDaysDictionary[i + 1]["temp"] + "°";
   }
 }
 
