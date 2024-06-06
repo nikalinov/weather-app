@@ -8,6 +8,12 @@ const dayNames = [
   "Saturday",
 ];
 
+const weatherTypes = {
+  Rain: "https://img.icons8.com/color-glass/42/000000/rain.png",
+  Clouds: "https://img.icons8.com/color-glass/42/000000/cloud.png",
+  Clear: "https://img.icons8.com/color-glass/42/000000/sun.png",
+};
+
 // formatting time and day
 function formatTime(date) {
   let hours = date.getHours();
@@ -64,7 +70,6 @@ function displayWeatherInfo(response) {
     fiveDaysDictionary[0]["weatherType"];
   document.querySelector("#current-day").innerHTML =
     fiveDaysDictionary[0]["day"];
-  console.log(fiveDaysDictionary);
   const nextDays =
     document.getElementsByClassName("row week-forecast")[0].childNodes;
 
@@ -76,6 +81,8 @@ function displayWeatherInfo(response) {
       fiveDaysDictionary[i + 1]["weatherType"];
     currDay.getElementsByTagName("span")[0].innerHTML =
       fiveDaysDictionary[i + 1]["temp"] + "°";
+    currDay.getElementsByTagName("img")[0].src =
+      weatherTypes[fiveDaysDictionary[i + 1]["weatherType"]];
   }
 }
 
@@ -107,7 +114,7 @@ function searchCity(city) {
 
 async function setPicture(city) {
   const promise = await fetch(
-    `https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1&w=500&h=500`
+    `https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1`
   ); // TODO hide API Key
   const result = await promise.json();
   const picture = result.results[0].urls.raw;
@@ -133,3 +140,5 @@ function handleSubmit(event) {
 
 const searchBar = document.querySelector("#search-form");
 searchBar.addEventListener("submit", handleSubmit);
+
+searchCity("Bristol");

@@ -7,6 +7,11 @@ const dayNames = [
     "Friday",
     "Saturday"
 ];
+const weatherTypes = {
+    Rain: "https://img.icons8.com/color-glass/42/000000/rain.png",
+    Clouds: "https://img.icons8.com/color-glass/42/000000/cloud.png",
+    Clear: "https://img.icons8.com/color-glass/42/000000/sun.png"
+};
 // formatting time and day
 function formatTime(date) {
     let hours = date.getHours();
@@ -45,13 +50,13 @@ function displayWeatherInfo(response) {
     document.querySelector("#wind").innerHTML = `${fiveDaysDictionary[0]["windSpeed"]}km/h`;
     document.querySelector("#weather-type").innerHTML = fiveDaysDictionary[0]["weatherType"];
     document.querySelector("#current-day").innerHTML = fiveDaysDictionary[0]["day"];
-    console.log(fiveDaysDictionary);
     const nextDays = document.getElementsByClassName("row week-forecast")[0].childNodes;
     for(let i = 0; i < 4; i++){
         const currDay = nextDays[1 + 2 * i];
         currDay.getElementsByTagName("h3")[0].innerHTML = fiveDaysDictionary[i + 1]["day"];
         currDay.getElementsByClassName("weather")[0].innerHTML = fiveDaysDictionary[i + 1]["weatherType"];
         currDay.getElementsByTagName("span")[0].innerHTML = fiveDaysDictionary[i + 1]["temp"] + "\xb0";
+        currDay.getElementsByTagName("img")[0].src = weatherTypes[fiveDaysDictionary[i + 1]["weatherType"]];
     }
 }
 function createFiveDaysDictionary(response) {
@@ -80,7 +85,7 @@ function searchCity(city) {
     setPicture(city);
 }
 async function setPicture(city) {
-    const promise = await fetch(`https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1&w=500&h=500`); // TODO hide API Key
+    const promise = await fetch(`https://api.unsplash.com/search/photos/?client_id=Z2pRlKiwrqZYJQbwMytFxXzOWQF0ggPOCQQsuuecHic&query=${city}&page=1`); // TODO hide API Key
     const result = await promise.json();
     const picture = result.results[0].urls.raw;
     console.log(picture);
@@ -103,5 +108,6 @@ function handleSubmit(event) {
 }
 const searchBar = document.querySelector("#search-form");
 searchBar.addEventListener("submit", handleSubmit);
+searchCity("Bristol");
 
 //# sourceMappingURL=index.c36f364e.js.map
