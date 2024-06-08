@@ -44,16 +44,21 @@ currentDay.innerHTML = formatDay(newCurrentDay);
 // implementing search bar and api request
 function displayWeatherInfo(response) {
     const fiveDaysDictionary = createFiveDaysDictionary(response);
+    setCurrDayWeather(fiveDaysDictionary);
+    setThreeHourForecast(fiveDaysDictionary);
+    setNextDaysWeather(fiveDaysDictionary);
+}
+function setCurrDayWeather(fiveDaysDictionary) {
     document.querySelector("#searched-city").innerHTML = fiveDaysDictionary[0][3]["city"];
     document.querySelector("#current-temperature").innerHTML = `${fiveDaysDictionary[0][3]["temp"]}\xb0`;
     document.querySelector("#humidity").innerHTML = `${fiveDaysDictionary[0][3]["humidity"]}%`;
     document.querySelector("#wind").innerHTML = `${fiveDaysDictionary[0][3]["windSpeed"]}km/h`;
     document.querySelector("#weather-type").innerHTML = fiveDaysDictionary[0][3]["weatherType"];
     document.querySelector("#current-day").innerHTML = fiveDaysDictionary[0][3]["day"];
+}
+function setThreeHourForecast(fiveDaysDictionary) {
     const threeHourTemp = document.getElementById("threeHour");
-    console.log(threeHourTemp);
     const blocks = threeHourTemp.getElementsByClassName("col");
-    console.log(blocks);
     for(let i = 0; i < blocks.length; i++){
         let hours = 3 * i;
         if (hours < 10) hours = "0" + hours.toString();
@@ -65,13 +70,15 @@ function displayWeatherInfo(response) {
         blocks[i].getElementsByTagName("img")[0].src = weatherTypes[weatherType];
         blocks[i].getElementsByTagName("span")[0].innerHTML = fiveDaysDictionary[0][i]["temp"] + "\xb0";
     }
+}
+function setNextDaysWeather(fiveDaysDictionary) {
     const nextDays = document.getElementsByClassName("row week-forecast")[0].childNodes;
-    for(let i = 0; i < fiveDaysDictionary.length; i++){
+    for(let i = 0; i < fiveDaysDictionary.length - 1; i++){
         const currDay = nextDays[1 + 2 * i];
-        currDay.getElementsByTagName("h3")[0].innerHTML = fiveDaysDictionary[i][3]["day"];
-        currDay.getElementsByClassName("weather")[0].innerHTML = fiveDaysDictionary[i][3]["weatherType"];
-        currDay.getElementsByTagName("span")[0].innerHTML = fiveDaysDictionary[i][3]["temp"] + "\xb0";
-        currDay.getElementsByTagName("img")[0].src = weatherTypes[fiveDaysDictionary[i][3]["weatherType"]];
+        currDay.getElementsByTagName("h3")[0].innerHTML = fiveDaysDictionary[i + 1][3]["day"];
+        currDay.getElementsByClassName("weather")[0].innerHTML = fiveDaysDictionary[i + 1][3]["weatherType"];
+        currDay.getElementsByTagName("span")[0].innerHTML = fiveDaysDictionary[i + 1][3]["temp"] + "\xb0";
+        currDay.getElementsByTagName("img")[0].src = weatherTypes[fiveDaysDictionary[i + 1][3]["weatherType"]];
     }
 }
 function createFiveDaysDictionary(response) {
