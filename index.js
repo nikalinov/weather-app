@@ -122,7 +122,7 @@ function createFiveDaysDictionary(response) {
     [{}, {}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}, {}],
   ];
-  console.log(response.data);
+
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 8; j++) {
       dailyWeather[i][j].city = response.data.city.name;
@@ -145,6 +145,23 @@ function createFiveDaysDictionary(response) {
   }
 
   return dailyWeather;
+}
+
+function getAllTempElements() {
+  var spans = $("span").filter(function (idx) {
+    console.log(idx);
+    return this.innerHTML.indexOf("°") > -1;
+  });
+  return spans;
+}
+
+function switchToFahrenheit() {
+  const tempNodes = getAllTempElements();
+  for (let i = 0; i < tempNodes.length; i++) {
+    const currCelsius = Number(tempNodes[i].innerHTML.slice(0, -1));
+    tempNodes[i].innerHTML =
+      Math.round(currCelsius * 1.8 + 32).toString() + "°F";
+  }
 }
 
 function searchCity(city) {
@@ -182,5 +199,7 @@ function handleSubmit(event) {
 
 const searchBar = document.querySelector("#search-form");
 searchBar.addEventListener("submit", handleSubmit);
+const fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", switchToFahrenheit);
 
 searchCity("Bristol");
