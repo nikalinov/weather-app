@@ -122,22 +122,24 @@ function createFiveDaysDictionary(response) {
     [{}, {}, {}, {}, {}, {}, {}, {}],
     [{}, {}, {}, {}, {}, {}, {}, {}],
   ];
-
+  console.log(response.data);
   for (let i = 0; i < 5; i++) {
     for (let j = 0; j < 8; j++) {
       dailyWeather[i][j].city = response.data.city.name;
       dailyWeather[i][j].temp = Math.round(
-        response.data.list[8 * i + j].main.temp
+        response.data.list[8 * i + ((4 + j) % 8)].main.temp
       );
       dailyWeather[i][j].humidity = response.data.list[8 * i + j].main.humidity;
       dailyWeather[i][j].windSpeed = Math.round(
-        response.data.list[8 * i + j].wind.speed
+        response.data.list[8 * i + ((4 + j) % 8)].wind.speed
       );
       dailyWeather[i][j].weatherType =
-        response.data.list[8 * i + j].weather[0].main;
+        response.data.list[8 * i + ((4 + j) % 8)].weather[0].main;
       dailyWeather[i][j].day =
         dayNames[
-          new Date(response.data.list[8 * i + j].dt_txt.split(" ")[0]).getDay()
+          new Date(
+            response.data.list[8 * i + ((4 + j) % 8)].dt_txt.split(" ")[0]
+          ).getDay()
         ];
     }
   }
