@@ -7,12 +7,15 @@ const dayNames = [
   "Friday",
   "Saturday",
 ];
+let tempNodes;
 
 const weatherTypes = {
   Rain: "https://img.icons8.com/color-glass/42/000000/rain.png",
   Clouds: "https://img.icons8.com/color-glass/42/000000/cloud.png",
   Clear: "https://img.icons8.com/color-glass/42/000000/sun.png",
 };
+
+let currUnits = "celsius";
 
 // formatting time and day
 function formatTime(date) {
@@ -65,7 +68,7 @@ function setCurrDayWeather(fiveDaysDictionary) {
     fiveDaysDictionary[0][3]["city"];
   document.querySelector(
     "#current-temperature"
-  ).innerHTML = `${fiveDaysDictionary[0][3]["temp"]}°`;
+  ).innerHTML = `${fiveDaysDictionary[0][3]["temp"]}°C`;
   document.querySelector(
     "#humidity"
   ).innerHTML = `${fiveDaysDictionary[0][3]["humidity"]}%`;
@@ -89,12 +92,11 @@ function setThreeHourForecast(fiveDaysDictionary) {
       hours = hours.toString();
     }
     blocks[i].getElementsByTagName("h3")[0].innerHTML = hours + ":00";
-    console.log(fiveDaysDictionary);
     const weatherType = fiveDaysDictionary[0][i]["weatherType"];
     blocks[i].getElementsByTagName("p")[0].innerHTML = weatherType;
     blocks[i].getElementsByTagName("img")[0].src = weatherTypes[weatherType];
     blocks[i].getElementsByTagName("span")[0].innerHTML =
-      fiveDaysDictionary[0][i]["temp"] + "°";
+      fiveDaysDictionary[0][i]["temp"] + "°C";
   }
 }
 
@@ -108,7 +110,7 @@ function setNextDaysWeather(fiveDaysDictionary) {
     currDay.getElementsByClassName("weather")[0].innerHTML =
       fiveDaysDictionary[i + 1][3]["weatherType"];
     currDay.getElementsByTagName("span")[0].innerHTML =
-      fiveDaysDictionary[i + 1][3]["temp"] + "°";
+      fiveDaysDictionary[i + 1][3]["temp"] + "°C";
     currDay.getElementsByTagName("img")[0].src =
       weatherTypes[fiveDaysDictionary[i + 1][3]["weatherType"]];
   }
@@ -149,25 +151,18 @@ function createFiveDaysDictionary(response) {
 
 function getAllTempElements() {
   var spans = $("span").filter(function (idx) {
-    console.log(idx);
-    return this.innerHTML.indexOf("°") > -1;
+    return this.innerHTML.indexOf("°C") > -1;
   });
   return spans;
-}
-
-function switchToFahrenheit() {
-  const tempNodes = getAllTempElements();
-  for (let i = 0; i < tempNodes.length; i++) {
-    const currCelsius = Number(tempNodes[i].innerHTML.slice(0, -1));
-    tempNodes[i].innerHTML =
-      Math.round(currCelsius * 1.8 + 32).toString() + "°F";
-  }
 }
 
 function searchCity(city) {
   const apiKey = "2b5fc755ac2ec59250868b5527df31c4"; // TODO hide API Key
   const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
-  axios.get(`${apiUrl}&appid=${apiKey}`).then(displayWeatherInfo);
+  axios.get(`${apiUrl}&appid=${apiKey}`).then(function(resolve, reject) => {
+    displayWeatherInfo();
+    getAllTempElements();
+  });
   setPicture(city);
 }
 
@@ -177,7 +172,6 @@ async function setPicture(city) {
   ); // TODO hide API Key
   const result = await promise.json();
   const picture = result.results[0].urls.raw;
-  console.log(picture);
   document.getElementsByTagName("style")[0].innerHTML = `body::before {
         content: "";
         position: absolute;
@@ -199,7 +193,28 @@ function handleSubmit(event) {
 
 const searchBar = document.querySelector("#search-form");
 searchBar.addEventListener("submit", handleSubmit);
-const fahrenheitLink = document.querySelector("#fahrenheit-link");
-fahrenheitLink.addEventListener("click", switchToFahrenheit);
+
+$("#celsius-link").click(function () {
+  if (currUnits === "celsius") {
+    return;
+  }
+  currUnits = "celsius";
+  for (let i = 0; i < tempNodes.length; i++) {
+    const currFahrenheit = Number(tempNodes[i].innerHTML.slice(0, -2));
+    tempNodes[i].innerHTML =
+      Math.round(((currFahrenheit - 32) * 5) / 9).toString() + "°F";
+  }
+});
+$("#fahrenheit-link").click(function () {
+  if (currUnits === "fahrenheit") {
+    return;
+  }
+  currUnits = "fahrenheit";
+  for (let i = 0; i < tempNodes.length; i++) {
+    const currCelsius = Number(tempNodes[i].innerHTML.slice(0, -2));
+    tempNodes[i].innerHTML =
+      Math.round(currCelsius * 1.8 + 32).toString() + "°F";
+  }
+});
 
 searchCity("Bristol");
