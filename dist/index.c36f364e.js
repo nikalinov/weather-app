@@ -155,6 +155,7 @@ function searchCity(city) {
     const apiKey = "2b5fc755ac2ec59250868b5527df31c4"; // TODO hide API Key
     const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
     axios.get(`${apiUrl}&appid=${apiKey}`).then((response)=>{
+        console.log(response.data);
         displayWeatherInfo(response);
         tempNodes = getAllTempElements();
     });
@@ -183,22 +184,23 @@ function handleSubmit(event) {
 }
 const searchBar = document.querySelector("#search-form");
 searchBar.addEventListener("submit", handleSubmit);
-$("#celsius-link").click(function() {
-    if (currUnits === "celsius") return;
-    currUnits = "celsius";
+$("#celsius-link").click({
+    units: "celsius"
+}, switchUnits);
+$("#fahrenheit-link").click({
+    units: "fahrenheit"
+}, switchUnits);
+function switchUnits(event) {
+    if (event.data.units === currUnits) return;
+    console.log(event.data.units);
+    console.log(currUnits);
+    currUnits = event.data.units;
     for(let i = 0; i < tempNodes.length; i++){
-        const currFahrenheit = Number(tempNodes[i].innerHTML.slice(0, -2));
-        tempNodes[i].innerHTML = Math.round((currFahrenheit - 32) * 5 / 9).toString() + "\xb0C";
+        const currTemp = Number(tempNodes[i].innerHTML.slice(0, -2));
+        if (event.data.units === "fahrenheit") tempNodes[i].innerHTML = Math.round(currTemp * 1.8 + 32).toString() + "\xb0F";
+        else tempNodes[i].innerHTML = Math.round((currTemp - 32) * 5 / 9).toString() + "\xb0C";
     }
-});
-$("#fahrenheit-link").click(function() {
-    if (currUnits === "fahrenheit") return;
-    currUnits = "fahrenheit";
-    for(let i = 0; i < tempNodes.length; i++){
-        const currCelsius = Number(tempNodes[i].innerHTML.slice(0, -2));
-        tempNodes[i].innerHTML = Math.round(currCelsius * 1.8 + 32).toString() + "\xb0F";
-    }
-});
+}
 searchCity("Bristol");
 
 //# sourceMappingURL=index.c36f364e.js.map
