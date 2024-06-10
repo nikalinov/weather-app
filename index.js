@@ -150,7 +150,7 @@ function createFiveDaysDictionary(response) {
 }
 
 function getAllTempElements() {
-  var spans = $("span").filter(function (idx) {
+  var spans = $("span, h1").filter(function () {
     return this.innerHTML.indexOf("°C") > -1;
   });
   return spans;
@@ -159,9 +159,9 @@ function getAllTempElements() {
 function searchCity(city) {
   const apiKey = "2b5fc755ac2ec59250868b5527df31c4"; // TODO hide API Key
   const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
-  axios.get(`${apiUrl}&appid=${apiKey}`).then(function(resolve, reject) => {
-    displayWeatherInfo();
-    getAllTempElements();
+  axios.get(`${apiUrl}&appid=${apiKey}`).then((response) => {
+    displayWeatherInfo(response);
+    tempNodes = getAllTempElements();
   });
   setPicture(city);
 }
@@ -202,7 +202,7 @@ $("#celsius-link").click(function () {
   for (let i = 0; i < tempNodes.length; i++) {
     const currFahrenheit = Number(tempNodes[i].innerHTML.slice(0, -2));
     tempNodes[i].innerHTML =
-      Math.round(((currFahrenheit - 32) * 5) / 9).toString() + "°F";
+      Math.round(((currFahrenheit - 32) * 5) / 9).toString() + "°C";
   }
 });
 $("#fahrenheit-link").click(function () {
