@@ -158,7 +158,7 @@ function getAllTempElements() {
 
 function searchCity(city) {
   const apiKey = "2b5fc755ac2ec59250868b5527df31c4"; // TODO hide API Key
-  const apiUrl = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
+  const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=metric`;
   axios.get(`${apiUrl}&appid=${apiKey}`).then((response) => {
     console.log(response.data);
     displayWeatherInfo(response);
